@@ -6,7 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import com.quitto.server.infrastructure.db.Entity.users.UserEntity;
+import com.quitto.server.infrastructure.db.User.Entity.UserEntity;
 
 @Component
 public class UserAuthoritiesMapper {

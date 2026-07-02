@@ -1,7 +1,7 @@
-package com.quitto.server.infrastructure.db.mapper;
+package com.quitto.server.infrastructure.db.User.Mapper;
 
-import com.quitto.server.domain.models.User;
-import com.quitto.server.infrastructure.db.Entity.users.UserEntity;
+import com.quitto.server.domain.models.User.User;
+import com.quitto.server.infrastructure.db.User.Entity.UserEntity;
 
 public class UserMapper {
 
@@ -35,5 +35,5 @@ public class UserMapper {
         );
         return userEntity;
     }
-    
+
 }

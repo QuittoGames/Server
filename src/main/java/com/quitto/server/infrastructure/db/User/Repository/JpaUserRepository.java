@@ -1,10 +1,10 @@
-package com.quitto.server.infrastructure.db.repository.users;
+package com.quitto.server.infrastructure.db.User.Repository;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.quitto.server.infrastructure.db.Entity.users.UserEntity;
+import com.quitto.server.infrastructure.db.User.Entity.UserEntity;
 
 public interface JpaUserRepository
     extends JpaRepository<UserEntity, Long> {

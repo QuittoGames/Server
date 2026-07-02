@@ -1,4 +1,4 @@
-package com.quitto.server.domain.models;
+package com.quitto.server.domain.models.LinuxAcount;
 
 public class Groups {
     private int GID;

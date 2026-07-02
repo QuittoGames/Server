@@ -10,8 +10,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import com.quitto.server.domain.enums.Role;
-import com.quitto.server.infrastructure.db.Entity.users.UserEntity;
-import com.quitto.server.infrastructure.db.repository.users.JpaUserRepository;
+import com.quitto.server.infrastructure.db.User.Entity.UserEntity;
+import com.quitto.server.infrastructure.db.User.Repository.JpaUserRepository;
 
 @Service
 public class OAuth2UserProvisioningService extends DefaultOAuth2UserService {

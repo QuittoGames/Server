@@ -1,4 +1,4 @@
-package com.quitto.server.infrastructure.db.Entity.users;
+package com.quitto.server.infrastructure.db.User.Entity;
 
 import java.time.LocalDateTime;
 
@@ -16,27 +16,31 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "ExternalAccont")
-public class ExternalAccontEntity {
+@Table(name = "external_account")
+public class ExternalAccountEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private UserEntity user;
 
     @Enumerated(EnumType.STRING)
-    private Provaider provaider;
+    @Column(name = "provider", nullable = false, length = 50)
+    private Provaider provider;
 
-    @Column(nullable = false)
-    private String external_client;
+    @Column(name = "external_client", nullable = false, length = 255)
+    private String externalClient;
 
-    @Column(nullable = false)
-    private String acsessToken;
+    @Column(name = "access_token", nullable = false)
+    private String accessToken;
 
+    @Column(name = "refresh_token")
     private String refreshToken;
 
+    @Column(name = "expires_at")
     private LocalDateTime expiresAt;
 
     public Long getId() {
@@ -51,28 +55,28 @@ public class ExternalAccontEntity {
         this.user = user;
     }
 
-    public Provaider getProvaider() {
-        return provaider;
+    public Provaider getProvider() {
+        return provider;
     }
 
-    public void setProvaider(Provaider provaider) {
-        this.provaider = provaider;
+    public void setProvider(Provaider provider) {
+        this.provider = provider;
     }
 
-    public String getExternal_client() {
-        return external_client;
+    public String getExternalClient() {
+        return externalClient;
     }
 
-    public void setExternal_client(String external_client) {
-        this.external_client = external_client;
+    public void setExternalClient(String externalClient) {
+        this.externalClient = externalClient;
     }
 
-    public String getAcsessToken() {
-        return acsessToken;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setAcsessToken(String acsessToken) {
-        this.acsessToken = acsessToken;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
     public String getRefreshToken() {
@@ -89,5 +93,13 @@ public class ExternalAccontEntity {
 
     public void setExpiresAt(LocalDateTime expiresAt) {
         this.expiresAt = expiresAt;
+    }
+
+    @Override
+    public String toString() {
+        return "ExternalAccountEntity [id=" + id +
+                ", provider=" + provider +
+                ", externalClient=" + externalClient +
+                ", expiresAt=" + expiresAt + "]";
     }
 }

@@ -1,14 +1,14 @@
-package com.quitto.server.infrastructure.db.adapter;
+package com.quitto.server.infrastructure.db.User.Adapter;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.quitto.server.domain.Repository.users.UserRepository;
-import com.quitto.server.domain.models.User;
-import com.quitto.server.infrastructure.db.Entity.users.UserEntity;
-import com.quitto.server.infrastructure.db.mapper.UserMapper;
-import com.quitto.server.infrastructure.db.repository.users.JpaUserRepository;
+import com.quitto.server.domain.models.User.User;
+import com.quitto.server.infrastructure.db.User.Entity.UserEntity;
+import com.quitto.server.infrastructure.db.User.Mapper.UserMapper;
+import com.quitto.server.infrastructure.db.User.Repository.JpaUserRepository;
 
 @Repository
 public class UserRepositoryAdapter implements UserRepository {
@@ -19,7 +19,7 @@ public class UserRepositoryAdapter implements UserRepository {
     @Override
     public User save(User user){
         var entity = UserMapper.toInfra(user);
-        UserEntity saved = repository.save(entity);        
+        UserEntity saved = repository.save(entity);
         return UserMapper.toDomain(saved);
     }
 
@@ -28,6 +28,7 @@ public class UserRepositoryAdapter implements UserRepository {
         Optional<UserEntity> userEntity = repository.findByEmail(email);
 
         if (userEntity.isEmpty()) {
+
             return Optional.empty();
         }
 

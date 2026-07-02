@@ -1,4 +1,4 @@
-package com.quitto.server.domain.models;
+package com.quitto.server.domain.models.User;
 
 import java.util.List;
 

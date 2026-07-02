@@ -1,7 +1,7 @@
 package com.quitto.server.domain.Repository.users;
 
 import java.util.Optional;
-import com.quitto.server.domain.models.User;
+import com.quitto.server.domain.models.User.User;
 
 public interface UserRepository {
 

@@ -1,4 +1,4 @@
-package com.quitto.server.infrastructure.db.Entity.users;
+package com.quitto.server.infrastructure.db.User.Entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,21 +14,22 @@ import com.quitto.server.domain.enums.Role;
 @Entity
 @Table(name = "user")
 public class UserEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false,length = 150,unique = true)
+    @Column(name = "name", nullable = false, length = 150, unique = true)
     private String name;
 
-    @Column(nullable = false,length = 150)
+    @Column(name = "password_hash", nullable = false, length = 150)
     private String passwordHash;
 
-    @Column(nullable = false,length = 150)
+    @Column(name = "email", nullable = false, length = 150, unique = true)
     private String email;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 150)
+    @Column(name = "role", nullable = false, length = 50)
     private Role role = Role.USER;
 
     public UserEntity() {
@@ -58,8 +59,8 @@ public class UserEntity {
         return passwordHash;
     }
 
-    public void setPasswordHash(String password) {
-        this.passwordHash = password;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     public String getEmail() {
@@ -74,7 +75,12 @@ public class UserEntity {
         return role;
     }
 
-    public void setRole(Role role){
+    public void setRole(Role role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity [id=" + id + ", name=" + name + ", email=" + email + ", role=" + role + "]";
     }
 }

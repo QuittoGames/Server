@@ -1,31 +1,31 @@
 package com.quitto.server.domain.models.Machine;
 
 public class Machine {
-    private int id;
+    private Long id;
     private String hostname;
-    private String tailsclae_node_key;
-    private String curent_ip;
-    private String mac_adress;
-    private boolean wol_enabled;
+    private String tailscaleNodeKey;
+    private String currentIp;
+    private String macAddress;
+    private boolean wolEnabled;
     private boolean status;
     private String OS;
 
     public Machine() {
     }
 
-    public Machine(int id, String hostname, String tailsclae_node_key, String curent_ip, String mac_adress,
+    public Machine(Long id, String hostname, String tailsclae_node_key, String curent_ip, String mac_adress,
             boolean status, boolean wol_enabled, String oS) {
         this.id = id;
         this.hostname = hostname;
-        this.tailsclae_node_key = tailsclae_node_key;
-        this.curent_ip = curent_ip;
-        this.mac_adress = mac_adress;
+        this.tailscaleNodeKey = tailsclae_node_key;
+        this.currentIp = curent_ip;
+        this.macAddress = mac_adress;
         this.status = status;
-        this.wol_enabled = wol_enabled;
-        OS = oS;
+        this.wolEnabled = wol_enabled;
+        this.OS = oS;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
@@ -33,28 +33,28 @@ public class Machine {
         return hostname;
     }
 
-    public String getTailsclae_node_key() {
-        return tailsclae_node_key;
+    public String getTailscaleNodeKey() {
+        return tailscaleNodeKey;
     }
 
-    public String getCurent_ip() {
-        return curent_ip;
+    public String getCurrentIp() {
+        return currentIp;
     }
 
-    public void setCurent_ip(String curent_ip) {
-        this.curent_ip = curent_ip;
+    public void setCurrentIp(String curent_ip) {
+        this.currentIp = curent_ip;
     }
 
-    public String getMac_adress() {
-        return mac_adress;
+    public String getMacAddress() {
+        return macAddress;
     }
 
-    public boolean isWol_enabled() {
-        return wol_enabled;
+    public boolean isWolEnabled() {
+        return wolEnabled;
     }
 
-    public void setWol_enabled(boolean wol_enabled) {
-        this.wol_enabled = wol_enabled;
+    public void setWolEnabled(boolean wol_enabled) {
+        this.wolEnabled = wol_enabled;
     }
 
     public String getOS() {
@@ -89,8 +89,8 @@ public class Machine {
 
     @Override
     public String toString() {
-        return "Machine [id=" + id + ", hostname=" + hostname + ", tailsclae_node_key=" + tailsclae_node_key
-                + ", curent_ip=" + curent_ip + ", mac_adress=" + mac_adress + ", wol_enabled=" + wol_enabled
+        return "Machine [id=" + id + ", hostname=" + hostname + ", tailsclae_node_key=" + tailscaleNodeKey
+                + ", curent_ip=" + currentIp + ", mac_adress=" + macAddress + ", wol_enabled=" + wolEnabled
                 + ", status=" + status + ", OS=" + OS + "]";
     }
 
