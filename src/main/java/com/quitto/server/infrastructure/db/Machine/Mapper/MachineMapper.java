@@ -18,7 +18,8 @@ public class MachineMapper {
                 machineEntity.getMacAddress(),
                 machineEntity.isWolEnabled(),
                 machineEntity.isStatus(),
-                machineEntity.getOS());
+            machineEntity.getOS(),
+            machineEntity.getUserId());
     }
 
     public static MachineEntity toInfra(Machine machine) throws IllegalArgumentException {
@@ -34,7 +35,8 @@ public class MachineMapper {
                 machine.getMacAddress(),
                 machine.isWolEnabled(),
                 machine.isStatus(),
-                machine.getOS()
+            machine.getOS(),
+            machine.getUserId()
             );
     }
 }

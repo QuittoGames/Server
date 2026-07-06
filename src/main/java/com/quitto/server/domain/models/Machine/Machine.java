@@ -9,6 +9,7 @@ public class Machine {
     private boolean wolEnabled;
     private boolean status;
     private String OS;
+    private Long userId;
 
     public Machine() {
     }
@@ -23,6 +24,12 @@ public class Machine {
         this.status = status;
         this.wolEnabled = wol_enabled;
         this.OS = oS;
+    }
+
+    public Machine(Long id, String hostname, String tailsclae_node_key, String curent_ip, String mac_adress,
+            boolean status, boolean wol_enabled, String oS, Long userId) {
+        this(id, hostname, tailsclae_node_key, curent_ip, mac_adress, status, wol_enabled, oS);
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -64,6 +71,14 @@ public class Machine {
     public void setOS(String oS) {
         OS = oS;
     }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
     public boolean isStatus() {
         return status;
     }
@@ -91,7 +106,7 @@ public class Machine {
     public String toString() {
         return "Machine [id=" + id + ", hostname=" + hostname + ", tailsclae_node_key=" + tailscaleNodeKey
                 + ", curent_ip=" + currentIp + ", mac_adress=" + macAddress + ", wol_enabled=" + wolEnabled
-                + ", status=" + status + ", OS=" + OS + "]";
+                + ", status=" + status + ", OS=" + OS + ", userId=" + userId + "]";
     }
 
 }

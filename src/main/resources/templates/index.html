@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quitto Server</title>
+    <link rel="stylesheet" href="/css/app.css" />
+</head>
+<body>
+    <main class="page-shell">
+        <section class="hero-card">
+            <div class="hero-copy">
+                <span class="eyebrow">Quitto Server</span>
+                <h1>Uma base web Spring para autenticação, MCP e administração.</h1>
+                <p>
+                    Este front inicial já abre pela rota raiz, conversa com o login OAuth2
+                    e deixa o projeto pronto para evoluir para telas administrativas.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="primary" href="/oauth2/authorization/google">Entrar com Google</a>
+                    <a class="secondary" href="#overview">Ver estrutura</a>
+                </div>
+            </div>
+
+            <aside class="hero-panel">
+                <div class="panel-chip">Spring Boot 4</div>
+                <div class="metric">
+                    <strong>Web MVC</strong>
+                    <span>View renderizada com Thymeleaf</span>
+                </div>
+                <div class="metric">
+                    <strong>Security</strong>
+                    <span>OAuth2 + rotas protegidas</span>
+                </div>
+                <div class="metric">
+                    <strong>MCP</strong>
+                    <span>Área reservada para ferramentas</span>
+                </div>
+            </aside>
+        </section>
+
+        <section id="overview" class="grid">
+            <article class="feature-card">
+                <h2>Autenticação</h2>
+                <p>Login social já integrado ao fluxo de segurança do Spring.</p>
+            </article>
+            <article class="feature-card">
+                <h2>Administração</h2>
+                <p>Espaço para futuras telas internas e páginas de suporte operacional.</p>
+            </article>
+            <article class="feature-card">
+                <h2>Extensibilidade</h2>
+                <p>Base pronta para novos módulos, APIs e integrações sem mudar a home.</p>
+            </article>
+        </section>
+    </main>
+</body>
+</html>

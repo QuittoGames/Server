@@ -16,4 +16,6 @@ public interface JpaUserRepository
     boolean existsByEmail(String email);
 
     boolean existsByName(String name);
+
+    Optional<UserEntity> exexistsById(Long id);
 }

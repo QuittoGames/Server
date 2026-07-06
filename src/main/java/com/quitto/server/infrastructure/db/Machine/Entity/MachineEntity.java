@@ -1,12 +1,18 @@
 package com.quitto.server.infrastructure.db.Machine.Entity;
 
+import com.quitto.server.infrastructure.db.User.Entity.UserEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
-@Entity(name = "machine")
+@Entity
+@Table(name = "machine")
 public class MachineEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +39,10 @@ public class MachineEntity {
     @Column(nullable = true, length = 50, unique = false, name = "os")
     private String OS;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id",nullable = false)
+    private UserEntity user;
+
     public MachineEntity() {
 
     }
@@ -47,6 +57,12 @@ public class MachineEntity {
         this.wolEnabled = wolEnabled;
         this.status = status;
         OS = oS;
+    }
+
+    public MachineEntity(Long id, String hostname, String tailscaleNodeKey, String currentIp, String macAddress,
+            boolean wolEnabled, boolean status, String oS, Long userId) {
+        this(id, hostname, tailscaleNodeKey, currentIp, macAddress, wolEnabled, status, oS);
+        setUserId(userId);
     }
 
     public Long getId() {
@@ -97,10 +113,26 @@ public class MachineEntity {
         OS = OS;
     }
 
+    public Long getUserId() {
+        return user != null ? user.getId() : null;
+    }
+
+    public void setUserId(Long userId) {
+        this.user = userId != null ? new UserEntity(userId, null, null, null, null) : null;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "MachineEntity [id=" + id + ", hostname=" + hostname + ", tailscaleNodeKey=" + tailscaleNodeKey
                 + ", currentIp=" + currentIp + ", macAddress=" + macAddress + ", wolEnabled=" + wolEnabled + ", status="
-                + status + ", OS=" + OS + "]";
+                + status + ", OS=" + OS + ", userId=" + getUserId() + "]";
     }
 }

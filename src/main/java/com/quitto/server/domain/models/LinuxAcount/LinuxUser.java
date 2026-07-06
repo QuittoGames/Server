@@ -1,13 +1,11 @@
 package com.quitto.server.domain.models.LinuxAcount;
 
-import java.util.List;
-
 public class LinuxUser {
     private int uid;
     private String name;
     private String shell;
     private String homeDir;
-    private List<Groups> groups;
+    private Groups group;
 
     public LinuxUser() {
     }
@@ -35,8 +33,12 @@ public class LinuxUser {
         return homeDir;
     }
 
-    public List<Groups> getGroups() {
-        return groups;
+    public Groups getGroup() {
+        return group;
+    }
+
+    public void setGroup(Groups group) {
+        this.group = group;
     }
 
     public void setName(String name) {
@@ -45,10 +47,6 @@ public class LinuxUser {
 
     public void setShell(String shell) {
         this.shell = shell;
-    }
-
-    public void addGroup(Groups group){
-        this.groups.add(group);
     }
 
     @Override
@@ -68,6 +66,6 @@ public class LinuxUser {
 
     @Override
     public String toString() {
-        return "LinuxUser [uid=" + uid + ", name=" + name + ", shell=" + shell + ", homeDir=" + homeDir + "]";
+        return "LinuxUser [uid=" + uid + ", name=" + name + ", shell=" + shell + ", homeDir=" + homeDir + ", group=" + group + "]";
     }
 }

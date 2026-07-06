@@ -63,6 +63,10 @@ public class User {
         return linuxUser;
     }
 
+    public void setLinuxUser(LinuxUser linuxUser) {
+        this.linuxUser = linuxUser;
+    }
+
     public List<Machine> getMachine() {
         return machine;
     }

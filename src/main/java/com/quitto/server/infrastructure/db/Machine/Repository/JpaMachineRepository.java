@@ -14,7 +14,7 @@ public interface JpaMachineRepository extends JpaRepository<MachineEntity,Long>{
 
     Optional<MachineEntity> findByMacAddress(String macAddress);
 
-    Optional<MachineEntity> findByNodeKey(String nodeKey);
+    Optional<MachineEntity> findByTailscaleNodeKey(String tailscaleNodeKey);
 
     List<MachineEntity> findAll();
 

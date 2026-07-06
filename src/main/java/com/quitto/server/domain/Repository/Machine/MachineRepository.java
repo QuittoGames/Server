@@ -15,7 +15,7 @@ public interface MachineRepository {
 
     Optional<Machine> findByMacAddress(String macAddress);
 
-    Optional<Machine> findByNodeKey(String nodeKey);
+    Optional<Machine> findByTailscaleNodeKey(String tailscaleNodeKey);
 
     List<Machine> findAll();
 

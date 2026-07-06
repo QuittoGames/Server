@@ -24,7 +24,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
        http
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/", "/oauth2/**", "/login/**").permitAll()
+            .requestMatchers(
+                "/",
+                "/oauth2/**",
+                "/login/**",
+                "/css/**",
+                "/js/**",
+                "/images/**",
+                "/favicon.ico"
+            ).permitAll()
             .requestMatchers("/mcp/**").hasAuthority("MCP")
             .requestMatchers("/admin/**").hasAuthority("ADMIN")
             // .requestMatchers("/api/**").hasAuthority("API")

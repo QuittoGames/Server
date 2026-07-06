@@ -26,13 +26,13 @@ public class GoogelCalenderTools {
     public List<Event> listEvents(){
         try{
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            
+
             if (!(auth instanceof OAuth2AuthenticationToken oauth)) {
                throw new IllegalStateException("Not OAuth2 login");
             }
 
             OAuth2AuthorizedClient client = authService.getAuthorizedClient(oauth);
-                
+
             return service.listEvents(client);
         }catch(IllegalStateException e){
             System.err.println("Estado inválido de autenticação: " + e.getMessage());
@@ -41,5 +41,5 @@ public class GoogelCalenderTools {
         }
         return new ArrayList<>();
     }
-    
+
 }

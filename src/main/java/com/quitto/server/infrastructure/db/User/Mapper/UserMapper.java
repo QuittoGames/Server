@@ -33,6 +33,7 @@ public class UserMapper {
             userDomain.getEmail(),
             userDomain.getRole()
         );
+
         return userEntity;
     }
 
