@@ -1,4 +1,5 @@
 package com.quitto.server.infrastructure.db.User.Adapter;
+
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class UserRepositoryAdapter implements UserRepository {
     private JpaUserRepository repository;
 
     @Override
-    public User save(User user){
+    public User save(User user) {
         var entity = UserMapper.toInfra(user);
         UserEntity saved = repository.save(entity);
         return UserMapper.toDomain(saved);
@@ -56,5 +57,11 @@ public class UserRepositoryAdapter implements UserRepository {
     public boolean existsByName(String name) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'existsByName'");
+    }
+
+    @Override
+    public Optional<User> findById(Long id){
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findById'");
     }
 }

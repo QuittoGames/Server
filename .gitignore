@@ -1,10 +1,67 @@
-HELP.md
+### General ###
+*.log
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+*.class
+*.db
+*.sqlite
+*.DS_Store
+Thumbs.db
+*.stacktrace
+
+### Backup files ###
+*~
+*.bak
+*.swp
+*.swo
+*.orig
+
+### JVM crash logs ###
+hs_err_pid*
+replay_pid*
+
+### Environment variables (CREDENTIALS) ###
+.env
+.env.local
+.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+### Application config with secrets ###
+*.secret
+*.key
+*.p12
+*.jks
+*.cer
+*.crt
+
+### Maven ###
 target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-### STS ###
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### Eclipse ###
 .apt_generated
 .classpath
 .factorypath
@@ -12,12 +69,12 @@ target/
 .settings
 .springBeans
 .sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+.metadata
+bin/
+tmp/
+*.tmp
+*.tmp.*
+*.ctxt
 
 ### NetBeans ###
 /nbproject/private/
@@ -31,3 +88,25 @@ build/
 
 ### VS Code ###
 .vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+*.code-workspace
+
+### OS files ###
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+### Spring Boot specific ###
+!.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.properties
+/application-local.properties
+/application-local.yml
+/application-dev.properties
+/application-dev.yml

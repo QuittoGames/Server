@@ -6,8 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.quitto.server.infrastructure.db.User.Entity.UserEntity;
 
+
 public interface JpaUserRepository
     extends JpaRepository<UserEntity, Long> {
+
+    Optional<UserEntity> findById(Long id);
 
     Optional<UserEntity> findByEmail(String email);
 
