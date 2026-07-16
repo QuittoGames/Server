@@ -3,10 +3,15 @@ package com.quitto.server.application.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.quitto.server.application.dto.LoginDTO;
-import com.quitto.server.infrastructure.services.Auth.UserAuthenticationService;
+import com.quitto.server.application.dto.Auth.LoginDTO;
+import com.quitto.server.application.dto.Auth.LoginReponseDTO;
+import com.quitto.server.application.services.Auth.UserAuthenticationService;
+import com.quitto.server.domain.models.User.User;
+import com.quitto.server.infrastructure.adpter.Auth.JwtTokenAdapter;
 
 import javax.validation.Valid;
+
+import java.util.Date;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -25,7 +30,14 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Authentication> login(@RequestBody @Valid LoginDTO data) {
-        return ResponseEntity.ok(service.login(data.name(), data.passoword()));
+    public ResponseEntity<LoginReponseDTO> login(@RequestBody @Valid LoginDTO data) {
+        String token = service.login(data.name(), data.passoword());
+
+        LoginReponseDTO reponse = new LoginReponseDTO(
+            token,
+            new Date()
+        );
+
+        return ResponseEntity.ok(reponse);
     }
 }

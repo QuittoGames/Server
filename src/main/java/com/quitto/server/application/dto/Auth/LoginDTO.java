@@ -1,4 +1,4 @@
-package com.quitto.server.application.dto;
+package com.quitto.server.application.dto.Auth;
 
 public record LoginDTO(
         String name,
