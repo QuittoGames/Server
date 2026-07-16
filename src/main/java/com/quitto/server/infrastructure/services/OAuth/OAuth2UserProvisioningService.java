@@ -3,6 +3,7 @@ package com.quitto.server.infrastructure.services.OAuth;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
@@ -17,12 +18,9 @@ import com.quitto.server.infrastructure.db.User.Repository.JpaUserRepository;
 public class OAuth2UserProvisioningService extends DefaultOAuth2UserService {
 
     private final JpaUserRepository repo;
-    private final UserAuthoritiesMapper mapper;
 
-    public OAuth2UserProvisioningService(JpaUserRepository repo,
-                                   UserAuthoritiesMapper mapper) {
+    public OAuth2UserProvisioningService(JpaUserRepository repo) {
         this.repo = repo;
-        this.mapper = mapper;
     }
 
     @Override
@@ -40,7 +38,7 @@ public class OAuth2UserProvisioningService extends DefaultOAuth2UserService {
                 return repo.save(u);
             });
 
-        List<GrantedAuthority> authorities = mapper.map(user);
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_ "+ user.getRole().name()));
 
         return new DefaultOAuth2User(
             authorities,

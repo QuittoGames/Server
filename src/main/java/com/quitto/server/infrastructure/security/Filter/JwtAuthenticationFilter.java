@@ -10,8 +10,8 @@ import java.util.Optional;
 import java.util.List;
 
 import org.hibernate.query.sqm.sql.ConversionException;
-import org.springframework.jdbc.InvalidResultSetAccessException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.JwtValidationException;
@@ -55,7 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
             }
             UserEntity user = UserMapper.toInfra(user_domain.get());
 
-            var authorities = List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
+            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
 
             var auth = new UsernamePasswordAuthenticationToken(user, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(auth);
@@ -77,7 +77,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
     public String recoverToken(HttpServletRequest request) throws IllegalArgumentException{
         String HeaderToken = request.getHeader("Authorization");
         if (HeaderToken == null || HeaderToken.isBlank()){throw new IllegalArgumentException("JWT token is required");}
-        String token = HeaderToken.replace("Bearer", ""); // Remove the sufix of token
+        String token = HeaderToken.replace("Bearer ", ""); // Remove the sufix of token
         return token;
     }
 
