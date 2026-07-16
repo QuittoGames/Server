@@ -49,19 +49,20 @@ public class UserRepositoryAdapter implements UserRepository {
 
     @Override
     public boolean existsByEmail(String email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'existsByEmail'");
+        return repository.existsByEmail(email);
     }
 
     @Override
     public boolean existsByName(String name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'existsByName'");
+        return repository.existsByName(name);
     }
 
     @Override
     public Optional<User> findById(Long id){
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
+        Optional<UserEntity> userEntity = repository.findById(id);
+        if (userEntity.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(UserMapper.toDomain(userEntity.get()));
     }
 }

@@ -48,12 +48,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
             if(!isValidToken) throw new InvalidTokenException("The provided JWT token is invalid or expired");
 
             Long id = tokenService.extractIdSubject(token);
-            Optional<User> user_domain = repository.findById(id);
-
-            if (user_domain.get() == null || user_domain.isEmpty()){
-                throw new IllegalArgumentException();
-            }
-            UserEntity user = UserMapper.toInfra(user_domain.get());
+            User user_domain = repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+            UserEntity user = UserMapper.toInfra(user_domain);
 
             List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
 
@@ -62,16 +59,22 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
         }catch(NullPointerException NE){
             logger.error(NE); // Before wiil use the self loggerclass for Log4j
+            SecurityContextHolder.clearContext();
         }
         catch(JwtValidationException JTWVE){
             logger.error(JTWVE);
+            SecurityContextHolder.clearContext();
         }
         catch(ConversionException CE){
             logger.error(CE);
+            SecurityContextHolder.clearContext();
         }
         catch(IllegalArgumentException IAE){
             logger.warn(IAE);
+            SecurityContextHolder.clearContext();
         }
+
+        filterChain.doFilter(request, response);
     }
 
     public String recoverToken(HttpServletRequest request) throws IllegalArgumentException{

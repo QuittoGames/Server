@@ -38,6 +38,7 @@ public class SecurityConfig {
             // .requestMatchers("/api/**").hasAuthority("API")
             .anyRequest().authenticated()
         )
+        .csrf(csrf -> csrf.disable())
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // Object Filter before of class
 
         .exceptionHandling(ex -> ex
