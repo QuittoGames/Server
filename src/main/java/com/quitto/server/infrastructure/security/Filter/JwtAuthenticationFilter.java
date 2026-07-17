@@ -1,12 +1,8 @@
 package com.quitto.server.infrastructure.security.Filter;
 
-import com.quitto.server.infrastructure.db.User.Entity.UserEntity;
-import com.quitto.server.infrastructure.db.User.Mapper.UserMapper;
-import com.quitto.server.infrastructure.services.Auth.JwtTokenService;
 import com.quitto.server.shared.exception.InvalidTokenException;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.List;
 
 import org.hibernate.query.sqm.sql.ConversionException;
@@ -21,19 +17,19 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.quitto.server.domain.Repository.users.UserRepository;
 import com.quitto.server.domain.interfaces.Token.TokenService;
 import com.quitto.server.domain.models.User.User;
+import com.quitto.server.infrastructure.security.SecurityUser;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter{
     private final TokenService<Long> tokenService;
     private final UserRepository repository;
 
-    public JwtAuthenticationFilter(TokenService<Long> tokenService,UserRepository repository, JwtTokenService jwtTokenService) {
+    public JwtAuthenticationFilter(TokenService<Long> tokenService,UserRepository repository) {
         this.tokenService = tokenService;
         this.repository = repository;
     }
@@ -48,11 +44,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
             if(!isValidToken) throw new InvalidTokenException("The provided JWT token is invalid or expired");
 
             Long id = tokenService.extractIdSubject(token);
+
             User user_domain = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
-            UserEntity user = UserMapper.toInfra(user_domain);
 
-            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
+            var user = new SecurityUser(id, user_domain.getName(), user_domain.getRole());
+
+            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + user.role().name()));
 
             var auth = new UsernamePasswordAuthenticationToken(user, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(auth);

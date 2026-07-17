@@ -48,7 +48,7 @@ public class Groups {
         }
 
         Groups other = (Groups) obj;
-        return this.GID <= 0  && this.GID == other.GID;
+        return this.GID > 0 && this.GID == other.GID;
     }
 
     @Override

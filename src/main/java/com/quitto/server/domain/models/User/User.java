@@ -47,8 +47,8 @@ public class User {
         return role;
     }
 
-    public void setPassowrdHash(String passowrd) {
-        this.passowrdHash = passowrd;
+    public void changePassword(String newPassowrdHash) {
+        this.passowrdHash = newPassowrdHash;
     }
 
     public void setEmail(String email) {

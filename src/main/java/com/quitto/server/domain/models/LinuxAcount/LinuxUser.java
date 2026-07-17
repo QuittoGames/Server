@@ -61,7 +61,7 @@ public class LinuxUser {
         }
 
         LinuxUser other = (LinuxUser) obj;
-        return this.uid <= 0  && this.uid == other.uid;
+        return this.uid > 0 && this.uid == other.uid;
     }
 
     @Override

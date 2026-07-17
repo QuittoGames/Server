@@ -3,8 +3,10 @@ package com.quitto.server.infrastructure.services.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.quitto.server.domain.interfaces.Auth.PasswordService;
+
 @Service
-public class BCryptPassowordService {
+public class BCryptPassowordService implements PasswordService{
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public String encode(String raw){

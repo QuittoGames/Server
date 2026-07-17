@@ -99,7 +99,7 @@ public class Machine {
         }
 
         Machine other = (Machine) obj;
-        return this.id <= 0  && this.id == other.id;
+        return this.id > 0 && this.id == other.id;
     }
 
     @Override
