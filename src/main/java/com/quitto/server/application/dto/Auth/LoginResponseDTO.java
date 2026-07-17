@@ -2,7 +2,7 @@ package com.quitto.server.application.dto.Auth;
 
 import java.util.Date;
 
-public record LoginReponseDTO(
+public record LoginResponseDTO(
     String token,
     Date date
 ) {

@@ -14,6 +14,7 @@ import org.springframework.security.oauth2.jwt.JwtValidationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.quitto.server.domain.Repository.users.UserRepository;
 import com.quitto.server.domain.interfaces.Token.TokenService;
 import com.quitto.server.domain.models.User.User;
@@ -50,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
             var user = new SecurityUser(id, user_domain.getName(), user_domain.getRole());
 
-            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + user.role().name()));
+            List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.role().name()));
 
             var auth = new UsernamePasswordAuthenticationToken(user, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(auth);
@@ -59,12 +60,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
             logger.error(NE); // Before wiil use the self loggerclass for Log4j
             SecurityContextHolder.clearContext();
         }
-        catch(JwtValidationException JTWVE){
+        catch(JWTVerificationException JTWVE){
             logger.error(JTWVE);
-            SecurityContextHolder.clearContext();
-        }
-        catch(ConversionException CE){
-            logger.error(CE);
             SecurityContextHolder.clearContext();
         }
         catch(IllegalArgumentException IAE){

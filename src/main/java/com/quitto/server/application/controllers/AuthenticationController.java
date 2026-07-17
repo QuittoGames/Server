@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.quitto.server.application.dto.Auth.LoginDTO;
-import com.quitto.server.application.dto.Auth.LoginReponseDTO;
+import com.quitto.server.application.dto.Auth.LoginResponseDTO;
 import com.quitto.server.application.services.Auth.UserAuthenticationService;
 
 import javax.validation.Valid;
@@ -27,14 +27,14 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginReponseDTO> login(@RequestBody @Valid LoginDTO data) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginDTO data) {
         String token = service.login(data.name(), data.passoword());
 
-        LoginReponseDTO reponse = new LoginReponseDTO(
+        LoginResponseDTO response = new LoginResponseDTO(
             token,
             new Date()
         );
 
-        return ResponseEntity.ok(reponse);
+        return ResponseEntity.ok(response);
     }
 }
