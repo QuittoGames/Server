@@ -33,6 +33,10 @@ public class SecurityConfig {
        http
         .authorizeHttpRequests(auth -> auth
             .requestMatchers("/auth/**").permitAll()
+            .requestMatchers("/auth/login").permitAll()
+            .requestMatchers("/api/test").permitAll()
+            .requestMatchers("/login").permitAll()
+            .requestMatchers("/", "/css/**").permitAll()
             .requestMatchers("/mcp/**").hasAuthority("MCP")
             .requestMatchers("/admin/**").hasAuthority("ADMIN")
             // .requestMatchers("/api/**").hasAuthority("API")

@@ -39,6 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)throws ServletException, IOException{
         try{
+            logger.info("ENTROOU NO FILTER !!");
             String token = recoverToken(request); // The token cannot be null because recoverToken() validates it before.
             boolean isValidToken = tokenService.verifyToken(token);
 
@@ -55,6 +56,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
             var auth = new UsernamePasswordAuthenticationToken(user, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(auth);
+            logger.info("SAINDO NO FILTER !!");
 
         }catch(NullPointerException NE){
             logger.error(NE); // Before wiil use the self loggerclass for Log4j
@@ -74,9 +76,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
     public String recoverToken(HttpServletRequest request) throws IllegalArgumentException{
         String HeaderToken = request.getHeader("Authorization");
-        if (HeaderToken == null || HeaderToken.isBlank()){throw new IllegalArgumentException("JWT token is required");}
-        String token = HeaderToken.replace("Bearer ", ""); // Remove the sufix of token
-        return token;
+
+        if (HeaderToken == null || HeaderToken.isBlank()){
+            String token = HeaderToken.replace("Bearer ", ""); // Remove the sufix of token
+        }
+
+
+        throw new IllegalArgumentException("JWT token is required");
     }
 
 }

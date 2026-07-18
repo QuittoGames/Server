@@ -28,7 +28,7 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginDTO data) {
-        String token = service.login(data.name(), data.passoword());
+        String token = service.login(data.name(), data.password());
 
         LoginResponseDTO response = new LoginResponseDTO(
             token,
