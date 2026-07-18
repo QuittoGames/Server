@@ -1,33 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <configuration>
 
-    <!-- Conversor customizado -->
+    <springProperty
+            scope="context"
+            name="coffe_server"
+            source="spring.application.name"
+            defaultValue="APP"/>
+
+    <springProperty
+            scope="context"
+            name="quitto"
+            source="spring.application.group"
+            defaultValue="CORE"/>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
     <conversionRule
             conversionWord="coffeeHighlight"
-            converterClass="com.quitto.server.infrastructure.config.logger.CoffeColorConverter"/>
+            class="com.quitto.server.infrastructure.config.logger.CoffeColorConverter"/>
 
-    <!-- Padrão do console -->
     <property
-            name="CONSOLE_LOG_PATTERN"
-            value="%clr([%d{HH:mm:ss}]){faint} %clr([${spring.application.name}]){blue} %clr([${spring.application.group}]){magenta} %clr([%thread]){cyan} %clr([%X{module:-SYSTEM}]){green} %coffeeHighlight([%-5level]) %clr(:){faint} %clr(%logger{0}){yellow} %clr(-){faint} %clr(%msg){white}%n"/>
+        name="CONSOLE_LOG_PATTERN"
+        value="%clr([%d{HH:mm:ss}]){faint} %clr([${coffe_server}]){blue,bold} %clr([${quitto}]){cyan} %clr([%thread]){blue} %clr([%X{module:-SYSTEM}]){faint} %coffeeHighlight([%-4level]) %clr(:){faint} %clr(%logger{40}){cyan} %clr(>){faint} %msg%n"/>
 
-    <!-- Padrão do arquivo -->
     <property
             name="FILE_LOG_PATTERN"
-            value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [${spring.application.name}] [${spring.application.group}] [%thread] [%X{module:-SYSTEM}] [%-5level] : %logger{0} - %msg%n"/>
+            value="%clr([%d{HH:mm:ss.SSS}]){faint} %clr([${coffe_server}]){blue,bold} %clr([${quitto}]){cyan} %clr([%thread]){blue} %clr([%X{module:-SYSTEM}]){faint} %coffeeHighlight([%-4level]) %clr(:){faint} %clr(%logger{40}){cyan} %clr(>){faint} %msg%n"/>
 
-    <!-- Console -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
+        <encoder charset="UTF-8">
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
         </encoder>
     </appender>
 
-    <!-- Arquivo (caso você use um FileAppender depois) -->
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>logs/application.log</file>
+        <append>true</append>
 
-        <encoder>
+        <encoder charset="UTF-8">
             <pattern>${FILE_LOG_PATTERN}</pattern>
         </encoder>
     </appender>
