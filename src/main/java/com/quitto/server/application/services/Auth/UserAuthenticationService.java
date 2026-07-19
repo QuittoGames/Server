@@ -7,6 +7,8 @@ import com.quitto.server.domain.interfaces.Auth.AuthenticationService;
 import com.quitto.server.domain.interfaces.Token.TokenService;
 import com.quitto.server.domain.models.User.User;
 
+import jakarta.servlet.http.Cookie;
+
 @Service
 public class UserAuthenticationService {
 
@@ -20,6 +22,9 @@ public class UserAuthenticationService {
 
     public String login(String name, String password) throws AuthenticationException {
         User user = authenticationService.authenticate(name, password);
-        return tokenService.genareteToken(user.getId());
+        String token = tokenService.genareteToken(user.getId());
+        Cookie cookie = new Cookie("acess_token", token);
+
+        return token;
     }
 }

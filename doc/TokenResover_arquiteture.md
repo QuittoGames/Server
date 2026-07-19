@@ -1,10 +1,7 @@
-# Arquiteture
+# Token Resolution Architecture
 
-I Will write this ...
+## Objective
 
-## Fluxo de Resolução de Token
-
-### Objective
 The authentication system should **not depend on where the token comes from**.
 
 A JWT may arrive through:
@@ -19,43 +16,44 @@ The authentication filter should only receive a token, validate it, and authenti
 
 ---
 
-### Architecture
+# Architecture
 
 ```
-                  Http Request
-                       │
-                       ▼
-          JwtAuthenticationFilter
-                       │
-                       ▼
-              TokenResolver
-                       │
-           CompositeTokenResolver
-           ┌───────────┴───────────┐
-           ▼                       ▼
- BearerTokenResolver      CookieTokenResolver
-           │                       │
-           └───────────┬───────────┘
-                       ▼
-               Optional<String>
-                       │
-                       ▼
-                JwtTokenService
-                       │
-         Verify / Extract Subject
-                       │
-                       ▼
-               UserRepository
-                       │
-                       ▼
-           Spring Security Context
+                 Http Request
+                      │
+                      ▼
+         JwtAuthenticationFilter
+                      │
+                      ▼
+             TokenResolver
+                      │
+          CompositeTokenResolver
+          ┌───────────┴───────────┐
+          ▼                       ▼
+BearerTokenResolver      CookieTokenResolver
+          │                       │
+          └───────────┬───────────┘
+                      ▼
+              Optional<String>
+                      │
+                      ▼
+               JwtTokenService
+                      │
+        Verify / Extract Subject
+                      │
+                      ▼
+              UserRepository
+                      │
+                      ▼
+          Spring Security Context
 ```
 
 ---
 
-### Responsibilities
+# Responsibilities
 
-#### JwtAuthenticationFilter
+## JwtAuthenticationFilter
+
 Responsible only for authentication.
 
 Responsibilities:
@@ -75,7 +73,8 @@ It **must not know**:
 
 ---
 
-#### TokenResolver
+## TokenResolver
+
 The abstraction responsible for obtaining a token from a request.
 
 ```java
@@ -90,7 +89,8 @@ The filter communicates only with this interface.
 
 ---
 
-#### BearerTokenResolver
+## BearerTokenResolver
+
 Responsible only for reading:
 
 ```
@@ -117,7 +117,8 @@ Optional.empty()
 
 ---
 
-#### CookieTokenResolver
+## CookieTokenResolver
+
 Responsible only for reading cookies.
 
 Example:
@@ -141,7 +142,8 @@ Optional.empty()
 
 ---
 
-#### CompositeTokenResolver
+## CompositeTokenResolver
+
 Coordinates multiple TokenResolvers.
 
 Example implementation:
@@ -166,6 +168,7 @@ public class CompositeTokenResolver implements TokenResolver {
 
         return Optional.empty();
     }
+
 }
 ```
 
@@ -179,7 +182,8 @@ The first resolver that finds a token wins.
 
 ---
 
-#### TokenService
+# TokenService
+
 TokenService is **not responsible for reading HTTP requests**.
 
 It only knows how to manipulate tokens.
@@ -212,7 +216,8 @@ OpaqueTokenService
 
 ---
 
-#### CookieFactory
+# CookieFactory
+
 Cookie creation should be isolated.
 
 Example:
@@ -242,7 +247,7 @@ The rest of the application should never manually configure cookies.
 
 ---
 
-### Authentication Flow
+# Authentication Flow
 
 ```
 Client
@@ -253,60 +258,60 @@ POST /login
     ▼
 UserAuthenticationService
     │
-    Authenticate user
+Authenticate user
     │
     ▼
 JwtTokenService
-    Generate JWT
+Generate JWT
     │
     ▼
 CookieFactory
-    Create Cookie
+Create Cookie
     │
     ▼
 Controller
-    Adds Cookie to HttpServletResponse
+Adds Cookie to HttpServletResponse
 ```
 
 ---
 
-### Authorization Flow
+# Authorization Flow
 
 ```
 Client Request
-        │
-        ▼
+       │
+       ▼
 JwtAuthenticationFilter
-        │
-        ▼
+       │
+       ▼
 CompositeTokenResolver
-        │
-        ├────────► BearerTokenResolver
-        │
-        └────────► CookieTokenResolver
-                     │
-                     ▼
-                JWT Token
-                     │
-                     ▼
+       │
+       ├────────► BearerTokenResolver
+       │
+       └────────► CookieTokenResolver
+                    │
+                    ▼
+               JWT Token
+                    │
+                    ▼
 JwtTokenService
-    Verify Token
-                     │
-                     ▼
+Verify Token
+                    │
+                    ▼
 Extract Subject
-                     │
-                     ▼
+                    │
+                    ▼
 UserRepository
-                     │
-                     ▼
+                    │
+                    ▼
 SecurityContextHolder
 ```
 
 ---
 
-### Advantages
+# Advantages
 
-#### Single Responsibility Principle (SRP)
+## Single Responsibility Principle (SRP)
 
 Each class has one responsibility.
 
@@ -322,7 +327,7 @@ Each class has one responsibility.
 
 ---
 
-#### Open/Closed Principle (OCP)
+## Open/Closed Principle (OCP)
 
 New authentication mechanisms can be added without modifying existing code.
 
@@ -344,7 +349,7 @@ The filter remains unchanged.
 
 ---
 
-#### Low Coupling
+## Low Coupling
 
 The authentication filter has no dependency on HTTP headers or cookies.
 
@@ -358,7 +363,7 @@ This keeps infrastructure details isolated.
 
 ---
 
-### Future Extensions
+# Future Extensions
 
 Possible new TokenResolvers:
 
@@ -372,7 +377,7 @@ No changes are required inside JwtAuthenticationFilter.
 
 ---
 
-### Design Philosophy
+# Design Philosophy
 
 The authentication filter should answer only one question:
 
@@ -381,4 +386,3 @@ The authentication filter should answer only one question:
 It should never care **how** that token was transported.
 
 This separation keeps the authentication pipeline clean, extensible, and aligned with the Dependency Inversion Principle (DIP).
-
