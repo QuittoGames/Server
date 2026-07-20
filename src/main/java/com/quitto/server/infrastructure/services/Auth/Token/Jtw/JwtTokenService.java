@@ -1,4 +1,4 @@
-package com.quitto.server.infrastructure.services.Auth.Jtw;
+package com.quitto.server.infrastructure.services.Auth.Token.Jtw;
 
 import java.util.Date;
 

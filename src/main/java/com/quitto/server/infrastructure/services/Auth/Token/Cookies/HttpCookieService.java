@@ -1,4 +1,4 @@
-package com.quitto.server.infrastructure.services.Auth.Cookies;
+package com.quitto.server.infrastructure.services.Auth.Token.Cookies;
 
 import org.springframework.stereotype.Service;
 
@@ -21,7 +21,7 @@ public class HttpCookieService implements CookieService{
     }
 
     @Override
-    public Object toFrameworkCookie(CookieDomain domainCookie) {
+    public Cookie toFrameworkCookie(CookieDomain domainCookie) {
         Cookie cookie = new Cookie(domainCookie.name(), domainCookie.value());
 
         cookie.setHttpOnly(domainCookie.httpOnly());

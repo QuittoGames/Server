@@ -33,5 +33,5 @@ public interface CookieService {
      * @param domainCookie domain CookieDomain to convert
      * @return framework-specific Cookie instance
      */
-    Object toFrameworkCookie(CookieDomain domainCookie);
+    <T> T toFrameworkCookie(CookieDomain domainCookie);
 }
