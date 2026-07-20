@@ -1,6 +1,4 @@
-package com.quitto.server.shared.exception;
-
-import org.springframework.security.core.AuthenticationException;
+package com.quitto.server.domain.exception;
 
 public class InvalidTokenException extends AuthenticationException {
 

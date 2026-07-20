@@ -1,9 +1,6 @@
-package com.quitto.server.shared.exception;
+package com.quitto.server.domain.exception;
 
-/**
- * Custom exception for authentication-related errors.
- */
-public class AuthenticationException extends Exception {
+public class AuthenticationException extends RuntimeException {
 
     public AuthenticationException() {
         super();

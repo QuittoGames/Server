@@ -1,13 +1,12 @@
 package com.quitto.server.application.services.Auth;
 
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
+
+import com.quitto.server.domain.exception.AuthenticationException;
 
 import com.quitto.server.domain.interfaces.Auth.AuthenticationService;
 import com.quitto.server.domain.interfaces.Token.TokenService;
 import com.quitto.server.domain.models.User.User;
-
-import jakarta.servlet.http.Cookie;
 
 @Service
 public class UserAuthenticationService {
@@ -22,9 +21,6 @@ public class UserAuthenticationService {
 
     public String login(String name, String password) throws AuthenticationException {
         User user = authenticationService.authenticate(name, password);
-        String token = tokenService.genareteToken(user.getId());
-        Cookie cookie = new Cookie("acess_token", token);
-
-        return token;
+        return tokenService.genareteToken(user.getId());
     }
 }

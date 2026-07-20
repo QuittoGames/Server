@@ -1,6 +1,6 @@
 package com.quitto.server.infrastructure.security.Filter;
 
-import com.quitto.server.shared.exception.InvalidTokenException;
+import com.quitto.server.domain.exception.InvalidTokenException;
 
 import java.io.IOException;
 import java.util.List;
@@ -77,7 +77,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
     public String recoverToken(HttpServletRequest request) throws IllegalArgumentException{
         TokenRequestContext context = new HttpTokenRequestContext(request);
-        return manager.resolve(context)
+        return manager.resolve(context) //Get all tokens in session
             .orElseThrow(() -> new IllegalArgumentException("JWT token is required"));
     }
 }
