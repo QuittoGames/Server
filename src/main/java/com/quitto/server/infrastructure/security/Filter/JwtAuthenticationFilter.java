@@ -78,6 +78,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
     public String recoverToken(HttpServletRequest request) throws IllegalArgumentException{
         TokenRequestContext context = new HttpTokenRequestContext(request);
         return manager.resolve(context) //Get all tokens in session
-            .orElseThrow(() -> new IllegalArgumentException("JWT token is required"));
+            .orElseThrow(() -> new IllegalArgumentException("token is required"));
     }
 }

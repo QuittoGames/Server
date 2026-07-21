@@ -15,6 +15,13 @@ public class User {
     private LinuxUser linuxUser;
     private List<Machine> machine;
 
+    public User(String name, String passowrdHash, String email, Role role){
+        this.name = name;
+        this.passowrdHash = passowrdHash;
+        this.email = email;
+        this.role = role;
+    }
+
     public User(long id, String name, String passowrd, String email, Role role) {
         this.id = id;
         this.name = name;

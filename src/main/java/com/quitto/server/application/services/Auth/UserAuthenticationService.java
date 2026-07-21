@@ -23,4 +23,9 @@ public class UserAuthenticationService {
         User user = authenticationService.authenticate(name, password);
         return tokenService.genareteToken(user.getId());
     }
+
+    public String register(String name , String password , String email){
+        User user = authenticationService.register(name, password, email);
+        return tokenService.genareteToken(user.getId());
+    }
 }

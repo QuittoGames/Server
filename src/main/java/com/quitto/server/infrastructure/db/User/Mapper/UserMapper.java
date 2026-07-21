@@ -26,8 +26,10 @@ public class UserMapper {
             throw new IllegalArgumentException("Paramter of User Domain is null");
         }
 
+        Long entityId = userDomain.getId() == 0 ? null : userDomain.getId();
+
         UserEntity userEntity = new UserEntity(
-            userDomain.getId(),
+            entityId,
             userDomain.getName(),
             userDomain.getPassowrdHash(),
             userDomain.getEmail(),
