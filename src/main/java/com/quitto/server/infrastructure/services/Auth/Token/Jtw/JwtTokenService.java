@@ -18,7 +18,7 @@ import com.quitto.server.domain.interfaces.Token.TokenService;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
-public class JwtTokenService implements TokenService {
+public class JwtTokenService implements TokenService<Long> {
 
     @Value("${api.security.key}") // Get ENV value
     private String KEY;

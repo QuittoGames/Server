@@ -1,8 +1,5 @@
 package com.quitto.server.infrastructure.services.Auth;
 
-import com.quitto.server.application.controllers.APIController;
-
-import com.quitto.server.application.services.Auth.UserAuthenticationService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

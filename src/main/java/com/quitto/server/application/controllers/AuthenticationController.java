@@ -13,7 +13,6 @@ import javax.validation.Valid;
 
 import java.util.Date;
 
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,7 +47,9 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<RegisterResponseDTO> register(@RequestBody @Valid RegisterDTO data) {
 
-        if (data.passoword().length() <= 0 || data.passoword().length() >= 500)  ResponseEntity.status(401).build();
+        if (data.passoword().length() <= 0 || data.passoword().length() >= 500) {
+            return ResponseEntity.status(401).build();
+        }
 
         String token = service.register(data.name(), data.passoword(), data.email());
 

@@ -1,5 +1,7 @@
 package com.quitto.server.domain.models.Machine;
 
+import com.quitto.server.domain.models.User.User;
+
 public class Machine {
     private Long id;
     private String hostname;
@@ -76,9 +78,10 @@ public class Machine {
         return userId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void changeOwner(User user) {
+        this.userId = user.getId();
     }
+
     public boolean isStatus() {
         return status;
     }

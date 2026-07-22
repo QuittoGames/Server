@@ -2,10 +2,13 @@ package com.quitto.server.infrastructure.security.Filter.Token;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Component;
+
 import com.quitto.server.domain.interfaces.Token.TokenRequestContext;
 import com.quitto.server.domain.interfaces.Token.TokenResolver;
 import com.quitto.server.domain.valueobject.CookieDomain;
 
+@Component
 public class CookieTokenResolver implements TokenResolver {
 
     @Override

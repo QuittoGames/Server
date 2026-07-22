@@ -2,9 +2,12 @@ package com.quitto.server.infrastructure.security.Filter.Token;
 
 import java.util.Optional;
 
+import org.springframework.stereotype.Component;
+
 import com.quitto.server.domain.interfaces.Token.TokenRequestContext;
 import com.quitto.server.domain.interfaces.Token.TokenResolver;
 
+@Component
 public class JtwTokenResvoler implements TokenResolver {
 
     @Override

@@ -48,7 +48,7 @@ public class MachineEntity {
     }
 
     public MachineEntity(Long id, String hostname, String tailscaleNodeKey, String currentIp, String macAddress,
-            boolean wolEnabled, boolean status, String oS) {
+            boolean wolEnabled, boolean status, String OS) {
         this.id = id;
         this.hostname = hostname;
         this.tailscaleNodeKey = tailscaleNodeKey;
@@ -56,13 +56,12 @@ public class MachineEntity {
         this.macAddress = macAddress;
         this.wolEnabled = wolEnabled;
         this.status = status;
-        OS = oS;
+        this.OS = OS;
     }
 
     public MachineEntity(Long id, String hostname, String tailscaleNodeKey, String currentIp, String macAddress,
             boolean wolEnabled, boolean status, String oS, Long userId) {
         this(id, hostname, tailscaleNodeKey, currentIp, macAddress, wolEnabled, status, oS);
-        setUserId(userId);
     }
 
     public Long getId() {
@@ -110,15 +109,11 @@ public class MachineEntity {
     }
 
     public void setOS(String OS) {
-        OS = OS;
+        this.OS = OS;
     }
 
     public Long getUserId() {
         return user != null ? user.getId() : null;
-    }
-
-    public void setUserId(Long userId) {
-        this.user = userId != null ? new UserEntity(userId, null, null, null, null) : null;
     }
 
     public UserEntity getUser() {
