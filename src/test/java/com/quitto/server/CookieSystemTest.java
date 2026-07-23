@@ -13,7 +13,7 @@ import com.quitto.server.domain.interfaces.Token.TokenResolver;
 import com.quitto.server.domain.valueobject.CookieDomain;
 import com.quitto.server.infrastructure.security.Filter.Adapter.HttpTokenRequestContext;
 import com.quitto.server.infrastructure.security.Filter.Token.CookieTokenResolver;
-import com.quitto.server.infrastructure.security.Filter.Token.JtwTokenResvoler;
+import com.quitto.server.infrastructure.security.Filter.Token.JwtTokenResolver;
 import com.quitto.server.infrastructure.services.Auth.Token.Cookies.HttpCookieService;
 import com.quitto.server.infrastructure.services.Auth.Token.TokenResolverManager;
 
@@ -60,38 +60,38 @@ class CookieSystemTest {
         assertThrows(IllegalArgumentException.class, () -> CookieDomain.of("bad;name", "value"));
     }
 
-    // --- JtwTokenResvoler ---
+    // --- JwtTokenResolver ---
 
     @Test
-    void jtwResolver_extractsBearerToken() {
+    void jwtResolver_extractsBearerToken() {
         TokenRequestContext ctx = mock(TokenRequestContext.class);
         when(ctx.getHeader("Authorization")).thenReturn(Optional.of("Bearer my-jwt-token"));
 
-        JtwTokenResvoler resolver = new JtwTokenResvoler();
-        Optional<String> result = resolver.resolver(ctx);
+        JwtTokenResolver resolver = new JwtTokenResolver();
+        Optional<String> result = resolver.resolve(ctx);
 
         assertTrue(result.isPresent());
         assertEquals("my-jwt-token", result.get());
     }
 
     @Test
-    void jtwResolver_returnsEmptyWhenNoAuthHeader() {
+    void jwtResolver_returnsEmptyWhenNoAuthHeader() {
         TokenRequestContext ctx = mock(TokenRequestContext.class);
         when(ctx.getHeader("Authorization")).thenReturn(Optional.empty());
 
-        JtwTokenResvoler resolver = new JtwTokenResvoler();
-        Optional<String> result = resolver.resolver(ctx);
+        JwtTokenResolver resolver = new JwtTokenResolver();
+        Optional<String> result = resolver.resolve(ctx);
 
         assertTrue(result.isEmpty());
     }
 
     @Test
-    void jtwResolver_returnsEmptyWhenBlankHeader() {
+    void jwtResolver_returnsEmptyWhenBlankHeader() {
         TokenRequestContext ctx = mock(TokenRequestContext.class);
         when(ctx.getHeader("Authorization")).thenReturn(Optional.of(""));
 
-        JtwTokenResvoler resolver = new JtwTokenResvoler();
-        Optional<String> result = resolver.resolver(ctx);
+        JwtTokenResolver resolver = new JwtTokenResolver();
+        Optional<String> result = resolver.resolve(ctx);
 
         assertTrue(result.isEmpty());
     }
@@ -105,7 +105,7 @@ class CookieSystemTest {
         when(ctx.getCookie("access_token")).thenReturn(Optional.of(cookie));
 
         CookieTokenResolver resolver = new CookieTokenResolver();
-        Optional<String> result = resolver.resolver(ctx);
+        Optional<String> result = resolver.resolve(ctx);
 
         assertTrue(result.isPresent());
         assertEquals("my-jwt-token", result.get());
@@ -117,7 +117,7 @@ class CookieSystemTest {
         when(ctx.getCookie("access_token")).thenReturn(Optional.empty());
 
         CookieTokenResolver resolver = new CookieTokenResolver();
-        Optional<String> result = resolver.resolver(ctx);
+        Optional<String> result = resolver.resolve(ctx);
 
         assertTrue(result.isEmpty());
     }
@@ -128,22 +128,22 @@ class CookieSystemTest {
     void manager_usesFirstMatchingResolver() {
         TokenResolver first = mock(TokenResolver.class);
         TokenResolver second = mock(TokenResolver.class);
-        when(first.resolver(any())).thenReturn(Optional.of("from-first"));
-        when(second.resolver(any())).thenReturn(Optional.of("from-second"));
+        when(first.resolve(any())).thenReturn(Optional.of("from-first"));
+        when(second.resolve(any())).thenReturn(Optional.of("from-second"));
 
         TokenResolverManager manager = new TokenResolverManager(List.of(first, second));
         Optional<String> result = manager.resolve(mock(TokenRequestContext.class));
 
         assertEquals("from-first", result.get());
-        verify(second, never()).resolver(any());
+        verify(second, never()).resolve(any());
     }
 
     @Test
     void manager_fallsBackToNextResolverWhenFirstEmpty() {
         TokenResolver first = mock(TokenResolver.class);
         TokenResolver second = mock(TokenResolver.class);
-        when(first.resolver(any())).thenReturn(Optional.empty());
-        when(second.resolver(any())).thenReturn(Optional.of("from-second"));
+        when(first.resolve(any())).thenReturn(Optional.empty());
+        when(second.resolve(any())).thenReturn(Optional.of("from-second"));
 
         TokenResolverManager manager = new TokenResolverManager(List.of(first, second));
         Optional<String> result = manager.resolve(mock(TokenRequestContext.class));
@@ -155,8 +155,8 @@ class CookieSystemTest {
     void manager_returnsEmptyWhenNoResolverMatches() {
         TokenResolver first = mock(TokenResolver.class);
         TokenResolver second = mock(TokenResolver.class);
-        when(first.resolver(any())).thenReturn(Optional.empty());
-        when(second.resolver(any())).thenReturn(Optional.empty());
+        when(first.resolve(any())).thenReturn(Optional.empty());
+        when(second.resolve(any())).thenReturn(Optional.empty());
 
         TokenResolverManager manager = new TokenResolverManager(List.of(first, second));
         Optional<String> result = manager.resolve(mock(TokenRequestContext.class));

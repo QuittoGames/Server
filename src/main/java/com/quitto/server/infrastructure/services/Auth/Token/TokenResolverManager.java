@@ -18,7 +18,7 @@ public class TokenResolverManager {
 
     public Optional<String> resolve(TokenRequestContext context) {
         for (TokenResolver resolver : resolvers) {
-            Optional<String> token = resolver.resolver(context);
+            Optional<String> token = resolver.resolve(context);
 
             if (token.isPresent()) {
                 return token;

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.quitto.server.domain.interfaces.Auth.PasswordService;
 
 @Service
-public class BCryptPassowordService implements PasswordService{
+public class BCryptPasswordService implements PasswordService{
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public String encode(String raw){

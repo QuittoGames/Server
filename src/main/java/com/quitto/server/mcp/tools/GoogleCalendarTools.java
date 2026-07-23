@@ -9,15 +9,17 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.stereotype.Component;
 
 import com.google.api.services.calendar.model.Event;
 import com.quitto.server.infrastructure.external.google.GoogleAuthService;
-import com.quitto.server.mcp.services.GoogleCalenderService;
+import com.quitto.server.mcp.services.GoogleCalendarService;
 
-public class GoogelCalenderTools {
+@Component
+public class GoogleCalendarTools {
 
     @Autowired
-    public GoogleCalenderService service;
+    public GoogleCalendarService service;
 
     @Autowired
     public GoogleAuthService authService;

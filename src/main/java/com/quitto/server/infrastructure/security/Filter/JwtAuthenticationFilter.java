@@ -4,6 +4,7 @@ import com.quitto.server.domain.exception.InvalidTokenException;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -47,7 +48,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
             if(!isValidToken) throw new InvalidTokenException("The provided JWT token is invalid or expired");
 
-            Long id = tokenService.extractIdSubject(token);
+            Long id = tokenService.extractIdSubject(token)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid token subject"));
 
             User user_domain = repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
@@ -59,16 +61,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
             var auth = new UsernamePasswordAuthenticationToken(user, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(auth);
 
-        }catch(NullPointerException NE){
-            logger.error(NE); // Before wiil use the self loggerclass for Log4j
+        }catch(NullPointerException e){
+            logger.error("Null pointer during authentication", e);
             SecurityContextHolder.clearContext();
         }
-        catch(JWTVerificationException JTWVE){
-            logger.error(JTWVE);
+        catch(JWTVerificationException e){
+            logger.error("JWT verification failed", e);
             SecurityContextHolder.clearContext();
         }
-        catch(IllegalArgumentException IAE){
-            logger.warn(IAE);
+        catch(IllegalArgumentException e){
+            logger.warn("Authentication argument error", e);
             SecurityContextHolder.clearContext();
         }
 

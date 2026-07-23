@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.api.services.calendar.model.Event;
-import com.quitto.server.mcp.services.GoogleCalenderService;
+import com.quitto.server.mcp.services.GoogleCalendarService;
 
 @RestController
 @PreAuthorize("permitAll()")
@@ -20,9 +20,9 @@ import com.quitto.server.mcp.services.GoogleCalenderService;
 
 public class CalendarController {
 
-    private final GoogleCalenderService service;
+    private final GoogleCalendarService service;
 
-    public CalendarController(GoogleCalenderService service) {
+    public CalendarController(GoogleCalendarService service) {
         this.service = service;
     }
 

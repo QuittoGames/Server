@@ -21,11 +21,11 @@ public class UserAuthenticationService {
 
     public String login(String name, String password) throws AuthenticationException {
         User user = authenticationService.authenticate(name, password);
-        return tokenService.genareteToken(user.getId());
+        return tokenService.generateToken(user.getId());
     }
 
     public String register(String name , String password , String email){
         User user = authenticationService.register(name, password, email);
-        return tokenService.genareteToken(user.getId());
+        return tokenService.generateToken(user.getId());
     }
 }

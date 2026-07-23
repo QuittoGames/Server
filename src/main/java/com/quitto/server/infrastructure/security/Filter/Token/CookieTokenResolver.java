@@ -12,7 +12,7 @@ import com.quitto.server.domain.valueobject.CookieDomain;
 public class CookieTokenResolver implements TokenResolver {
 
     @Override
-    public Optional<String> resolver(TokenRequestContext request) {
+    public Optional<String> resolve(TokenRequestContext request) {
         return request.getCookie("access_token")
             .map(CookieDomain::value);
     }

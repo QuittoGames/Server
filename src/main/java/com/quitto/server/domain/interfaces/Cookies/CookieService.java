@@ -1,6 +1,8 @@
-package com.quitto.server.domain.interfaces.Auth.Cookies;
+package com.quitto.server.domain.interfaces.Cookies;
 
 import com.quitto.server.domain.valueobject.CookieDomain;
+
+import jakarta.servlet.http.Cookie;
 
 public interface CookieService {
 
@@ -8,5 +10,5 @@ public interface CookieService {
 
     CookieDomain createCookie(String name, String value, String path, Integer maxAgeInSeconds);
 
-    <T> T toFrameworkCookie(CookieDomain domainCookie);
+    Cookie toFrameworkCookie(CookieDomain domainCookie);
 }

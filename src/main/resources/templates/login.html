@@ -150,8 +150,6 @@
                     return;
                 }
 
-                const data = await res.json();
-                localStorage.setItem('token', data.token);
                 window.location.href = '/';
             } catch (err) {
                 errorEl.textContent = 'Erro de conexão com o servidor';

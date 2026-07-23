@@ -1,6 +1,6 @@
 package com.quitto.server.domain.enums;
 
-public enum Provaider {
+public enum Provider {
     GOOGLE,
     GITHUB
 }

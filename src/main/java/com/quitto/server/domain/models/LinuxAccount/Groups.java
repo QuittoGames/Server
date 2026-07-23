@@ -1,4 +1,4 @@
-package com.quitto.server.domain.models.LinuxAcount;
+package com.quitto.server.domain.models.LinuxAccount;
 
 public class Groups {
     private int GID;
@@ -27,11 +27,11 @@ public class Groups {
         this.name = name;
     }
 
-    public boolean isIs_active() {
+    public boolean isActive() {
         return is_active;
     }
 
-    public void setIs_active(boolean is_active) {
+    public void setActive(boolean is_active) {
         this.is_active = is_active;
     }
 

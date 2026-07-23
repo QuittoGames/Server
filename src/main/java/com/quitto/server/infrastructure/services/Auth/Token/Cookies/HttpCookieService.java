@@ -2,8 +2,8 @@ package com.quitto.server.infrastructure.services.Auth.Token.Cookies;
 
 import org.springframework.stereotype.Service;
 
-import com.quitto.server.domain.interfaces.Auth.Cookies.CookieService;
 import com.quitto.server.domain.valueobject.CookieDomain;
+import com.quitto.server.domain.interfaces.Cookies.CookieService;
 
 import jakarta.servlet.http.Cookie;
 

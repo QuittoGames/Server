@@ -31,7 +31,7 @@ public class UserMapper {
         UserEntity userEntity = new UserEntity(
             entityId,
             userDomain.getName(),
-            userDomain.getPassowrdHash(),
+            userDomain.getPasswordHash(),
             userDomain.getEmail(),
             userDomain.getRole()
         );

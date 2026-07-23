@@ -1,4 +1,4 @@
-package com.quitto.server.domain.models.LinuxAcount;
+package com.quitto.server.domain.models.LinuxAccount;
 
 public class LinuxUser {
     private int uid;

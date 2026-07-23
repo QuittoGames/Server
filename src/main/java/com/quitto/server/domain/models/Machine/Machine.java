@@ -16,21 +16,21 @@ public class Machine {
     public Machine() {
     }
 
-    public Machine(Long id, String hostname, String tailsclae_node_key, String curent_ip, String mac_adress,
-            boolean status, boolean wol_enabled, String oS) {
+    public Machine(Long id, String hostname, String tailscaleNodeKey, String currentIp, String macAddress,
+            boolean status, boolean wolEnabled, String oS) {
         this.id = id;
         this.hostname = hostname;
-        this.tailscaleNodeKey = tailsclae_node_key;
-        this.currentIp = curent_ip;
-        this.macAddress = mac_adress;
+        this.tailscaleNodeKey = tailscaleNodeKey;
+        this.currentIp = currentIp;
+        this.macAddress = macAddress;
         this.status = status;
-        this.wolEnabled = wol_enabled;
+        this.wolEnabled = wolEnabled;
         this.OS = oS;
     }
 
-    public Machine(Long id, String hostname, String tailsclae_node_key, String curent_ip, String mac_adress,
-            boolean status, boolean wol_enabled, String oS, Long userId) {
-        this(id, hostname, tailsclae_node_key, curent_ip, mac_adress, status, wol_enabled, oS);
+    public Machine(Long id, String hostname, String tailscaleNodeKey, String currentIp, String macAddress,
+            boolean status, boolean wolEnabled, String oS, Long userId) {
+        this(id, hostname, tailscaleNodeKey, currentIp, macAddress, status, wolEnabled, oS);
         this.userId = userId;
     }
 
@@ -50,8 +50,8 @@ public class Machine {
         return currentIp;
     }
 
-    public void setCurrentIp(String curent_ip) {
-        this.currentIp = curent_ip;
+    public void setCurrentIp(String currentIp) {
+        this.currentIp = currentIp;
     }
 
     public String getMacAddress() {
@@ -62,16 +62,16 @@ public class Machine {
         return wolEnabled;
     }
 
-    public void setWolEnabled(boolean wol_enabled) {
-        this.wolEnabled = wol_enabled;
+    public void setWolEnabled(boolean wolEnabled) {
+        this.wolEnabled = wolEnabled;
     }
 
     public String getOS() {
         return OS;
     }
 
-    public void setOS(String oS) {
-        OS = oS;
+    public void setOS(String os) {
+        OS = os;
     }
 
     public Long getUserId() {
@@ -107,8 +107,8 @@ public class Machine {
 
     @Override
     public String toString() {
-        return "Machine [id=" + id + ", hostname=" + hostname + ", tailsclae_node_key=" + tailscaleNodeKey
-                + ", curent_ip=" + currentIp + ", mac_adress=" + macAddress + ", wol_enabled=" + wolEnabled
+        return "Machine [id=" + id + ", hostname=" + hostname + ", tailscaleNodeKey=" + tailscaleNodeKey
+                + ", currentIp=" + currentIp + ", macAddress=" + macAddress + ", wolEnabled=" + wolEnabled
                 + ", status=" + status + ", OS=" + OS + ", userId=" + userId + "]";
     }
 

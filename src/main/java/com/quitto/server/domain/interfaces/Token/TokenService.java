@@ -1,7 +1,9 @@
 package com.quitto.server.domain.interfaces.Token;
 
+import java.util.Optional;
+
 public interface TokenService<ID extends Number>{
-    String genareteToken(Long id);
+    String generateToken(Long id);
     boolean verifyToken(String token);
-    ID extractIdSubject(String token);
+    Optional<ID> extractIdSubject(String token);
 }

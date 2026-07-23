@@ -3,21 +3,21 @@ package com.quitto.server.domain.models.User;
 import java.util.List;
 
 import com.quitto.server.domain.enums.Role;
-import com.quitto.server.domain.models.LinuxAcount.LinuxUser;
+import com.quitto.server.domain.models.LinuxAccount.LinuxUser;
 import com.quitto.server.domain.models.Machine.Machine;
 
 public class User {
     private long id;
     private String name;
-    private String passowrdHash;
+    private String passwordHash;
     private String email;
     private Role role;
     private LinuxUser linuxUser;
     private List<Machine> machine;
 
-    public User(String name, String passowrdHash, String email, Role role){
+    public User(String name, String passwordHash, String email, Role role){
         this.name = name;
-        this.passowrdHash = passowrdHash;
+        this.passwordHash = passwordHash;
         this.email = email;
         this.role = role;
     }
@@ -25,7 +25,7 @@ public class User {
     public User(long id, String name, String passowrd, String email, Role role) {
         this.id = id;
         this.name = name;
-        this.passowrdHash = passowrd;
+        this.passwordHash = passowrd;
         this.email = email;
         this.role = role;
     }
@@ -42,8 +42,8 @@ public class User {
         return name;
     }
 
-    public String getPassowrdHash() {
-        return passowrdHash;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
     public String getEmail() {
@@ -54,8 +54,8 @@ public class User {
         return role;
     }
 
-    public void changePassword(String newPassowrdHash) {
-        this.passowrdHash = newPassowrdHash;
+    public void changePassword(String newPasswordHash) {
+        this.passwordHash = newPasswordHash;
     }
 
     public void setEmail(String email) {
@@ -95,7 +95,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", name=" + name + ", passowrdHash=" + passowrdHash + ", email=" + email + ", role="
+        return "User [id=" + id + ", name=" + name + ", passwordHash=" + passwordHash + ", email=" + email + ", role="
                 + role + ", linuxUser=" + linuxUser + ", machine=" + machine + "]";
     }
 

@@ -2,7 +2,7 @@ package com.quitto.server.infrastructure.db.User.Entity;
 
 import java.time.LocalDateTime;
 
-import com.quitto.server.domain.enums.Provaider;
+import com.quitto.server.domain.enums.Provider;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,7 +29,7 @@ public class ExternalAccountEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "provider", nullable = false, length = 50)
-    private Provaider provider;
+    private Provider provider;
 
     @Column(name = "external_client", nullable = false, length = 255)
     private String externalClient;
@@ -55,11 +55,11 @@ public class ExternalAccountEntity {
         this.user = user;
     }
 
-    public Provaider getProvider() {
+    public Provider getProvider() {
         return provider;
     }
 
-    public void setProvider(Provaider provider) {
+    public void setProvider(Provider provider) {
         this.provider = provider;
     }
 

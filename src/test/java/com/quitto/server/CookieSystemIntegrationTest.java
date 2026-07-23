@@ -31,7 +31,7 @@ import com.quitto.server.infrastructure.db.User.Repository.JpaUserRepository;
 import com.quitto.server.infrastructure.security.Filter.Adapter.HttpTokenRequestContext;
 import com.quitto.server.infrastructure.security.Filter.JwtAuthenticationFilter;
 import com.quitto.server.infrastructure.security.Filter.Token.CookieTokenResolver;
-import com.quitto.server.infrastructure.security.Filter.Token.JtwTokenResvoler;
+import com.quitto.server.infrastructure.security.Filter.Token.JwtTokenResolver;
 import com.quitto.server.infrastructure.services.Auth.Token.Cookies.HttpCookieService;
 import com.quitto.server.infrastructure.services.Auth.Token.TokenResolverManager;
 
@@ -64,7 +64,7 @@ class CookieSystemIntegrationTest {
 
     private MockMvc mockMvc;
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private final JtwTokenResvoler jtwTokenResvoler = new JtwTokenResvoler();
+    private final JwtTokenResolver jwtTokenResolver = new JwtTokenResolver();
     private final CookieTokenResolver cookieTokenResolver = new CookieTokenResolver();
 
     private static final String TEST_USER = "integracao_teste";
@@ -122,13 +122,13 @@ class CookieSystemIntegrationTest {
 
     @Test
     void jwtTokenService_generatesAndVerifiesToken() {
-        String token = tokenService.genareteToken(savedUserId);
+        String token = tokenService.generateToken(savedUserId);
 
         assertNotNull(token);
         assertFalse(token.isBlank());
         assertTrue(tokenService.verifyToken(token));
 
-        Long extractedId = tokenService.extractIdSubject(token);
+        Long extractedId = tokenService.extractIdSubject(token).orElseThrow();
         assertEquals(savedUserId, extractedId);
     }
 
@@ -178,7 +178,7 @@ class CookieSystemIntegrationTest {
         req.setCookies(new Cookie("access_token", "my-jwt-token"));
         var ctx = new HttpTokenRequestContext(req);
 
-        var result = cookieTokenResolver.resolver(ctx);
+        var result = cookieTokenResolver.resolve(ctx);
 
         assertTrue(result.isPresent());
         assertEquals("my-jwt-token", result.get());
@@ -190,7 +190,7 @@ class CookieSystemIntegrationTest {
         req.addHeader("Authorization", "Bearer my-bearer-jwt");
         var ctx = new HttpTokenRequestContext(req);
 
-        var result = jtwTokenResvoler.resolver(ctx);
+        var result = jwtTokenResolver.resolve(ctx);
 
         assertTrue(result.isPresent());
         assertEquals("my-bearer-jwt", result.get());
@@ -198,7 +198,7 @@ class CookieSystemIntegrationTest {
 
     @Test
     void tokenResolverManager_chain_usesCookieFirst() {
-        var manager = new TokenResolverManager(List.of(cookieTokenResolver, jtwTokenResvoler));
+        var manager = new TokenResolverManager(List.of(cookieTokenResolver, jwtTokenResolver));
         var req = new MockHttpServletRequest();
         req.setCookies(new Cookie("access_token", "token-from-cookie"));
         var ctx = new HttpTokenRequestContext(req);
@@ -211,7 +211,7 @@ class CookieSystemIntegrationTest {
 
     @Test
     void tokenResolverManager_chain_fallsbackToBearer() {
-        var manager = new TokenResolverManager(List.of(cookieTokenResolver, jtwTokenResvoler));
+        var manager = new TokenResolverManager(List.of(cookieTokenResolver, jwtTokenResolver));
         var req = new MockHttpServletRequest();
         req.addHeader("Authorization", "Bearer token-from-header");
         var ctx = new HttpTokenRequestContext(req);
@@ -224,7 +224,7 @@ class CookieSystemIntegrationTest {
 
     @Test
     void tokenResolverManager_chain_returnsEmptyWhenNoToken() {
-        var manager = new TokenResolverManager(List.of(cookieTokenResolver, jtwTokenResvoler));
+        var manager = new TokenResolverManager(List.of(cookieTokenResolver, jwtTokenResolver));
         var ctx = new HttpTokenRequestContext(new MockHttpServletRequest());
 
         var result = manager.resolve(ctx);
@@ -233,18 +233,18 @@ class CookieSystemIntegrationTest {
     }
 
     @Test
-    void jwtAuthenticationFilter_recoverToken_failsWhenNoResolversConfigured() {
+    void jwtAuthenticationFilter_recoverToken_succeedsWithBearerHeader() {
         var request = new MockHttpServletRequest();
         request.addHeader("Authorization", "Bearer some-token");
 
-        assertThrows(IllegalArgumentException.class,
-            () -> jwtAuthenticationFilter.recoverToken(request));
+        String result = jwtAuthenticationFilter.recoverToken(request);
+        assertEquals("some-token", result);
     }
 
     @Test
     void recoverToken_withProperManagerAndCookie() {
-        var manager = new TokenResolverManager(List.of(cookieTokenResolver, jtwTokenResvoler));
-        String jwt = tokenService.genareteToken(savedUserId);
+        var manager = new TokenResolverManager(List.of(cookieTokenResolver, jwtTokenResolver));
+        String jwt = tokenService.generateToken(savedUserId);
 
         var request = new MockHttpServletRequest();
         request.setCookies(new Cookie("access_token", jwt));
@@ -258,8 +258,8 @@ class CookieSystemIntegrationTest {
 
     @Test
     void recoverToken_withProperManagerAndBearer() {
-        var manager = new TokenResolverManager(List.of(cookieTokenResolver, jtwTokenResvoler));
-        String jwt = tokenService.genareteToken(savedUserId);
+        var manager = new TokenResolverManager(List.of(cookieTokenResolver, jwtTokenResolver));
+        String jwt = tokenService.generateToken(savedUserId);
 
         var request = new MockHttpServletRequest();
         request.addHeader("Authorization", "Bearer " + jwt);
@@ -288,7 +288,7 @@ class CookieSystemIntegrationTest {
 
         assertTrue(tokenService.verifyToken(response.token()));
 
-        Long extractedId = tokenService.extractIdSubject(response.token());
+        Long extractedId = tokenService.extractIdSubject(response.token()).orElseThrow();
         assertEquals(savedUserId, extractedId);
     }
 

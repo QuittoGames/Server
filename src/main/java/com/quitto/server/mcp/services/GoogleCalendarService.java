@@ -11,7 +11,7 @@ import com.google.api.services.calendar.Calendar;
 import com.quitto.server.infrastructure.external.GoogleCalendarClient;
 
 @Service
-public class GoogleCalenderService {
+public class GoogleCalendarService {
 
     @Autowired
     public GoogleCalendarClient client;
