@@ -18,8 +18,8 @@ import com.quitto.server.application.controllers.AuthenticationController;
 import com.quitto.server.application.dto.Auth.LoginDTO;
 import com.quitto.server.application.dto.Auth.RegisterDTO;
 import com.quitto.server.application.services.Auth.UserAuthenticationService;
-import com.quitto.server.domain.interfaces.Auth.CookieManager;
 import com.quitto.server.domain.valueobject.CookieDomain;
+import com.quitto.server.infrastructure.Adpter.out.CookieManagerAdapter;
 
 @ExtendWith(MockitoExtension.class)
 class AuthenticationControllerTest {
@@ -30,7 +30,7 @@ class AuthenticationControllerTest {
     private UserAuthenticationService userAuthService;
 
     @Mock
-    private CookieManager cookieManager;
+    private CookieManagerAdapter cookieManager;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 

@@ -38,7 +38,7 @@
     --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Victor Mono', monospace;
   }
 
-
+a
   /* ══════════════════════════════════════════════
      LAYER 1 — DARK MODERN
      Pure dark surfaces, no hue contamination.
@@ -359,8 +359,8 @@
 
 # Documentação de Arquitetura — Server App (coffe_server)
 
-> **Versão:** 0.0.1-SNAPSHOT  
-> **Stack:** Java 21 + Spring Boot 4.0.6  
+> **Versão:** 0.0.1-SNAPSHOT
+> **Stack:** Java 21 + Spring Boot 4.0.6
 > **Propósito:** Servidor backend com autenticação JWT, integração Google OAuth2, MCP/IA e gerenciamento de máquinas.
 
 ---
@@ -910,9 +910,9 @@ private TokenResolverManager manager;
 
 public void algumMetodo(HttpServletRequest request) {
     TokenRequestContext context = new HttpTokenRequestContext(request);
-    
+
     Optional<String> token = manager.resolve(context);
-    
+
     token.ifPresentOrElse(
         t -> System.out.println("Token encontrado: " + t),
         () -> System.out.println("Nenhum token encontrado")
@@ -928,7 +928,7 @@ private CookieTokenResolver cookieResolver;
 
 public void testarCookie(HttpServletRequest request) {
     TokenRequestContext context = new HttpTokenRequestContext(request);
-    
+
     Optional<String> token = cookieResolver.resolver(context);
     // Só verifica cookie, não tenta header
 }
@@ -943,10 +943,10 @@ void testCookieTokenResolver() {
     TokenRequestContext context = mock(TokenRequestContext.class);
     when(context.getCookie("access_token"))
         .thenReturn(Optional.of(new CookieDomain("access_token", "meu-jwt", true, true, "/", null)));
-    
+
     CookieTokenResolver resolver = new CookieTokenResolver();
     Optional<String> result = resolver.resolver(context);
-    
+
     assertEquals("meu-jwt", result.get());
 }
 
@@ -955,13 +955,13 @@ void testCookieTokenResolver() {
 void testManagerChain() {
     TokenResolver first = mock(TokenResolver.class);
     TokenResolver second = mock(TokenResolver.class);
-    
+
     when(first.resolver(any())).thenReturn(Optional.empty());
     when(second.resolver(any())).thenReturn(Optional.of("token-da-reserva"));
-    
+
     TokenResolverManager manager = new TokenResolverManager(List.of(first, second));
     Optional<String> result = manager.resolve(mock(TokenRequestContext.class));
-    
+
     assertEquals("token-da-reserva", result.get());
 }
 ```
@@ -1111,7 +1111,7 @@ private CookieService cookieService;
 public void loginResponse(HttpServletResponse response) {
     // 1. Cria o cookie no domínio (seguro, validado)
     CookieDomain cookie = cookieService.createCookie("access_token", "meu-jwt-aqui");
-    
+
     // 2. Escreve na resposta HTTP
     cookieService.writeCookie(response, cookie);
 }
@@ -1354,8 +1354,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserRepository repository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, 
-                                     HttpServletResponse response, 
+    protected void doFilterInternal(HttpServletRequest request,
+                                     HttpServletResponse response,
                                      FilterChain filterChain) {
         try {
             // 1. Recupera o token (não sabe de onde vem)
@@ -1409,7 +1409,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
    │   └── JwtTokenResolver → fallback: header "Authorization: Bearer"
    │
    └── Retorna token ou lança IllegalArgumentException
-   
+
 2. tokenService.verifyToken(token)
    │
    ├── Decodifica JWT com HMAC256
@@ -1465,10 +1465,10 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .csrf(csrf -> csrf.disable())
-            .addFilterBefore(jwtAuthenticationFilter, 
+            .addFilterBefore(jwtAuthenticationFilter,
                              UsernamePasswordAuthenticationFilter.class)
             .oauth2Login(oauth -> oauth
-                .userInfoEndpoint(userInfo -> 
+                .userInfoEndpoint(userInfo ->
                     userInfo.userService(oauthService)));
         return http.build();
     }
@@ -1998,6 +1998,6 @@ if (isJwt(token)) {
 
 ---
 
-> **Documentação mantida por:** Quitto  
-> **Última atualização:** Julho 2026  
+> **Documentação mantida por:** Quitto
+> **Última atualização:** Julho 2026
 > **Propósito:** Documentação viva — atualize conforme a arquitetura evoluir.

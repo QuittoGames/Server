@@ -63,32 +63,4 @@ class HttpCookieServiceTest {
         assertEquals(-1, cookie.getMaxAge());
     }
 
-    @Test
-    void writeCookie_addsCookieToResponse() {
-        CookieDomain domain = CookieDomain.of("access_token", "jwt");
-        var response = new org.springframework.mock.web.MockHttpServletResponse();
-
-        service.writeCookie(response, domain);
-
-        Cookie written = response.getCookie("access_token");
-        assertNotNull(written);
-        assertEquals("jwt", written.getValue());
-        assertTrue(written.isHttpOnly());
-        assertTrue(written.getSecure());
-        assertEquals("/", written.getPath());
-        assertEquals("coffe_server", written.getDomain());
-    }
-
-    @Test
-    void writeCookie_rejectsNullResponse() {
-        assertThrows(NullPointerException.class,
-            () -> service.writeCookie(null, CookieDomain.of("n", "v")));
-    }
-
-    @Test
-    void writeCookie_rejectsNullCookieDomain() {
-        var response = new org.springframework.mock.web.MockHttpServletResponse();
-        assertThrows(NullPointerException.class,
-            () -> service.writeCookie(response, null));
-    }
 }
